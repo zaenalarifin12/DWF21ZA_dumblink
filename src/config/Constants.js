@@ -1,0 +1,22 @@
+//
+export const LOGIN = "LOGIN";
+export const REGISTER = "REGISTER";
+export const LOGOUT = "LOGOUT";
+export const AUTH_ERROR = "AUTH_ERROR";
+
+export const INCREMENT_FOOD = "INCREMENT_FOOD";
+export const DECREMENT_FOOD = "DECREMENT_FOOD";
+export const REMOVE_FOOD = "REMOVE_FOOD";
+export const CLEAR_FOOD = "CLEAR_FOOD";
+
+export const ADD_ORDER_TRANSACTION = "ADD_ORDER_TRANSACTION";
+
+
+export const HIDE_MODAL_AUTH_ALL = "HIDE_MODAL_AUTH_ALL";
+export const SHOW_MODAL_LOGIN = "SHOW_MODAL_LOGIN";
+export const HIDE_MODAL_LOGIN = "HIDE_MODAL_LOGIN";
+export const SHOW_MODAL_REGISTER = "SHOW_MODAL_REGISTER";
+export const HIDE_MODAL_REGISTER = "HIDE_MODAL_REGISTER";
+
+export const MAPBOX_TOKEN =
+  "pk.eyJ1IjoiemFlbmFsYXJpZmluMTIiLCJhIjoiY2ttNTVubDA1MGI4cDJ3cGpnaXhnYmI4eiJ9.VYW-Y10msansi5fLqOQA0w";
