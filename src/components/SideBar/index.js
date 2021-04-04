@@ -21,11 +21,12 @@ function SideBar() {
   return (
     <nav
       id="sidebarMenu"
-      class="col-md-3 col-lg-2 bg-white d-md-block bg-light sidebar collapse"
+      class="col-md-3 col-lg-2 position-fixed bg-white d-md-block bg-light sidebar collapse"
+      
     >
-      <div class="sidebar-sticky pt-3 pl-4">
+      <div class="sidebar-sticky pt-5 pl-4">
         <ul class="nav flex-column">
-          <li class="nav-item d-flex justify-content-start my-3">
+          <li class="nav-item d-flex justify-content-start mb-3">
             <Link to={`/template`} class="nav-link active  ">
               <div className="d-flex align-self-center">
                 <img src="/assets/icons/template.svg" />{" "}
@@ -47,12 +48,12 @@ function SideBar() {
             </Link>
           </li>
 
-          <li class="nav-item d-flex justify-content-start my-3">
+          <li class="nav-item d-flex justify-content-start mt-3 mb-4">
             <Link to={`/my-link`} class="nav-link active  ">
               <div className="d-flex align-self-center">
                 <img src="/assets/icons/profile.svg" />{" "}
                 <span className="text-primary-black h4 ml-3 my-auto">
-                  Template
+                  My Link
                 </span>
               </div>
             </Link>
@@ -61,10 +62,11 @@ function SideBar() {
 
         <ul class="nav flex-column mb-2" style={{ marginTop: 550 }}>
           <li class="nav-item d-flex justify-content-start my-3">
-            <Button class="btn"
-            style={{backgroundColor: "#FFFF", border: "none"}}
-            
-            onClick={handleLogout}>
+            <Button
+              class="btn"
+              style={{ backgroundColor: "#FFFF", border: "none" }}
+              onClick={handleLogout}
+            >
               <div className="d-flex align-self-center">
                 <img src="/assets/icons/logout.svg" />{" "}
                 <span className="text-primary-black h4 ml-3 my-auto">

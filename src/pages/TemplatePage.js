@@ -7,7 +7,7 @@ import SideBar from "../components/SideBar";
 
 function Template() {
   return (
-    <Body>
+    <Body title="Template">
       <main
         role="main"
         class="col-md-9 ml-sm-auto col-lg-10 px-md-4 bg-light d-flex justify-content-around pt-4"

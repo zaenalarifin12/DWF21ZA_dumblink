@@ -63,7 +63,7 @@ function MyAccount() {
     approve.mutate();
   };
   return (
-    <Body>
+    <Body title="My Account">
       {success ? (
         <>
           <SweetAlert
@@ -78,7 +78,10 @@ function MyAccount() {
       ) : (
         <></>
       )}
-      <main role="main" class=" bg-light col-md-9 ml-sm-auto col-lg-10 px-md-4 pt-4">
+      <main
+        role="main"
+        class=" bg-light col-md-9 ml-sm-auto col-lg-10 px-md-4 pt-4"
+      >
         <Row className="d-flex justify-content-between px-4 py-2">
           <h1 className="h4">My Information</h1>
         </Row>
