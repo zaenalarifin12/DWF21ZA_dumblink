@@ -86,19 +86,6 @@ function Register(props) {
 
   return (
     <>
-      {modalError ? (
-        <>
-          <SweetAlert
-            danger
-            title={textError}
-            onConfirm={() => setModalError(false)}
-            timeout={100000}
-          ></SweetAlert>
-        </>
-      ) : (
-        <></>
-      )}
-
       <Modal
         show={props.show}
         onHide={props.onHide}
@@ -106,6 +93,18 @@ function Register(props) {
         aria-labelledby="contained-modal-title-vcenter"
         centered
       >
+        {modalError ? (
+          <>
+            <SweetAlert
+              danger
+              title={textError}
+              onConfirm={() => setModalError(false)}
+              timeout={100000}
+            ></SweetAlert>
+          </>
+        ) : (
+          <></>
+        )}
         <Modal.Header closeButton style={{ border: "none" }}>
           <Modal.Title>
             <h1 className="text-primary-black">Register</h1>
@@ -145,7 +144,7 @@ function Register(props) {
             </Form.Group>
 
             <div className="mt-5"></div>
-            <Button type="submit" className="btn-block btn-primary-yellow">
+            <Button type="submit" className="btn-block btn-primary-yellow text-white">
               Register
             </Button>
           </Form>

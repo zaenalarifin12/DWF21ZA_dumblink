@@ -1,7 +1,7 @@
 import React, { Fragment, useState } from "react";
 import { Form, Row, Col, Button } from "react-bootstrap";
 import SweetAlert from "react-bootstrap-sweetalert";
-import { useMutation } from "react-query";
+import { useMutation, useQuery } from "react-query";
 import { useHistory, useParams, withRouter } from "react-router";
 import Body from "../components/Body";
 import HeaderHome from "../components/HeaderHome";
@@ -14,7 +14,7 @@ import Preview4 from "../components/PreviewPhone/Preview4";
 import SideBar from "../components/SideBar";
 import { API } from "../config/api";
 
-function AddLink() {
+function EditLinkPage() {
   const params = useParams();
 
   const { id } = params;
@@ -31,6 +31,7 @@ function AddLink() {
   const [form, setForm] = useState({
     image: null,
     title: "",
+    template: "",
     description: "",
     imagePreviewUrl: "",
     links: [initialLink, initialLink],
@@ -44,6 +45,29 @@ function AddLink() {
   const [modalSuccess, setModalSuccess] = useState(false);
 
   const listLink = [];
+
+  const {
+    data: LinkData,
+    loading: LinkLoading,
+    error: LinkError,
+    refetch: LinkRefetch,
+  } = useQuery("editLink", async () => {
+    const response = await API.get(`/link/${id}`);
+
+    setForm({
+      ...form,
+      title: response?.data?.data?.link?.title,
+      description: response?.data?.data?.link?.description,
+      template: response?.data?.data?.link?.template,
+      imagePreviewUrl: response?.data?.data?.link?.image,
+      links: response?.data?.data?.link?.links?.map((l) => ({
+        titleLink: l.title,
+        urlLink: l.url,
+        imagePreviewUrl: l.image,
+      })),
+    });
+    return response;
+  });
 
   const onChange = (e) => {
     let tempForm = { ...form };
@@ -70,12 +94,10 @@ function AddLink() {
   };
 
   const addLinkForm = () => {
-    if (form.links.length < 5) {
-      setForm({
-        ...form,
-        links: form.links.concat([initialLink]),
-      });
-    }
+    setForm({
+      ...form,
+      links: form.links.concat([initialLink]),
+    });
   };
 
   const removeLinkForm = (index) => {
@@ -145,21 +167,19 @@ function AddLink() {
 
       // upload image one by one
       let newLinks = [];
-
       for (let index = 0; index < form.links.length; index++) {
         const bodyLink = new FormData();
 
         bodyLink.append("imageLink", links[index].imageLink);
 
-        const result = await API.post("/imageLink", bodyLink, config);
+        const responseImage = await API.post("/imageLink", bodyLink, config);
 
         const thisLink = {
           ...links[index],
-          imageLink: result.data.data.image,
+          imageLink: responseImage.data.data.image,
         };
         newLinks.push(thisLink);
       }
-
       body.append("links", JSON.stringify(newLinks));
 
       const response = await API.post("/link", body, config)
@@ -222,6 +242,8 @@ function AddLink() {
                 <input
                   type="text"
                   name="titleLink"
+                  value={link.titleLink}
+
                   onChange={(e) => onChangeLink(e, index)}
                   class="form-control form-custom bg-primary-gray"
                 />
@@ -234,6 +256,7 @@ function AddLink() {
                 <input
                   type="text"
                   name="urlLink"
+                  value={link.urlLink}
                   onChange={(e) => onChangeLink(e, index)}
                   class="form-control form-custom bg-primary-gray"
                 />
@@ -244,7 +267,7 @@ function AddLink() {
             </Row>
           </Col>
         </Row>
-        {form.links.length - 1 == index ? (
+        {index > 1 ? (
           <Row className="mt-2 d-flex justify-content-end">
             <Button
               onClick={() => removeLinkForm(index)}
@@ -354,6 +377,7 @@ function AddLink() {
                       <input
                         type="text"
                         name="title"
+                        value={title}
                         onChange={(e) => onChange(e)}
                         class="form-control form-custom"
                       />
@@ -368,6 +392,7 @@ function AddLink() {
                       <input
                         type="text"
                         name="description"
+                        value={description}
                         onChange={(e) => onChange(e)}
                         class="form-control form-custom"
                       />
@@ -379,18 +404,14 @@ function AddLink() {
 
                   {listLink}
 
-                  {form.links.length < 5 ? (
-                    <Row className="mt-4 d-flex justify-content-end">
-                      <Button
-                        onClick={() => addLinkForm()}
-                        className="btn btn-primary-yellow btn-md text-white font-weight-bold"
-                      >
-                        Add Link
-                      </Button>
-                    </Row>
-                  ) : (
-                    <></>
-                  )}
+                  <Row className="mt-4 d-flex justify-content-end">
+                    <Button
+                      onClick={() => addLinkForm()}
+                      className="btn btn-primary-yellow btn-md text-white font-weight-bold"
+                    >
+                      Add Link
+                    </Button>
+                  </Row>
                 </div>
               </Col>
               <Col>
@@ -424,4 +445,4 @@ function AddLink() {
   );
 }
 
-export default AddLink;
+export default EditLinkPage;

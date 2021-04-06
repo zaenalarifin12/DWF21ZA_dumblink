@@ -25,11 +25,16 @@ function PreviewLink() {
 
   return (
     <>
-      {/* <Preview1 linkData={linkData?.data?.data?.link} /> */}
-      {/* <Preview2 linkData={linkData?.data?.data?.link} /> */}
-      {/* <Preview3 linkData={linkData?.data?.data?.link} /> */}
-      <Preview4 linkData={linkData?.data?.data?.link} />
-
+    
+      {linkData?.data?.data?.link?.template == 1 ? (
+        <Preview1 linkData={linkData?.data?.data?.link} />
+      ) : linkData?.data?.data?.link?.template == 2 ? (
+        <Preview2 linkData={linkData?.data?.data?.link} />
+      ) : linkData?.data?.data?.link?.template == 3 ? (
+        <Preview3 linkData={linkData?.data?.data?.link} />
+      ) : (
+        <Preview4 linkData={linkData?.data?.data?.link} />
+      )}
     </>
   );
 }

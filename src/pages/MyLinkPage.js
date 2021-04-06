@@ -161,7 +161,7 @@ function MyLinkPage() {
                           >
                             <img src="/assets/icons/view.svg" />
                           </Link>
-                          <Link className="mr-4">
+                          <Link to={`/edit-link/${link.id}`} className="mr-4">
                             <img src="/assets/icons/edit.svg" />
                           </Link>
                           <Button

@@ -114,6 +114,7 @@ function Login(props) {
                 placeholder="Email"
                 value={data.email}
                 onChange={handleInputChange}
+                
                 name="email"
               />
             </Form.Group>

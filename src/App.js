@@ -14,6 +14,7 @@ import { QueryClient, QueryClientProvider } from "react-query";
 import { API, setAuthToken } from "./config/api";
 import { AUTH_ERROR, LOGIN } from "./config/Constants";
 import PrivateRoute from "./PrivateRoute";
+import EditLinkPage from "./pages/EditLinkPage";
 
 if (localStorage.token) {
   setAuthToken(localStorage.token);
@@ -60,7 +61,8 @@ function App() {
               <Route path="/" exact component={LandingPage} />
 
               <PrivateRoute path="/template" component={Template} />
-              <PrivateRoute path="/add-link" component={AddLink} />
+              <PrivateRoute path="/add-link/:id" component={AddLink} />
+              <PrivateRoute path="/edit-link/:id" component={EditLinkPage} />
               <PrivateRoute path="/my-link" component={MyLinkPage} />
               <PrivateRoute path="/my-account" component={MyAccount} />
               <Route path="/link/:id" component={PreviewLink} />

@@ -129,4 +129,13 @@ label:focus,
     padding-left: 0px !important;
 }
 
+.custom-file-input:lang(en)~.custom-file-label::after {
+    content: none !important;
+}
+
+.custom-file-label::after {
+    content: none !important;
+}
+
+
 @import "~bootstrap/scss/bootstrap";

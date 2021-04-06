@@ -1,14 +1,19 @@
 import React, { useState } from "react";
-import { Form, Row, Col, Button } from "react-bootstrap";
+import { Form, Row, Col, Button, Modal } from "react-bootstrap";
 import SweetAlert from "react-bootstrap-sweetalert";
 import { useMutation, useQuery } from "react-query";
-import { withRouter } from "react-router";
+import { useHistory, withRouter } from "react-router";
 import Body from "../components/Body";
 import HeaderHome from "../components/HeaderHome";
 import SideBar from "../components/SideBar";
 import { API } from "../config/api";
 
 function MyAccount() {
+  const history = useHistory();
+  // for modal
+  const [show, setShow] = useState(false);
+
+  // init form
   const [form, setForm] = useState({
     name: "",
     email: "",
@@ -17,6 +22,7 @@ function MyAccount() {
   const { name, email } = form;
 
   const [success, setSuccess] = useState(false);
+  const [textModal, setTextModal] = useState("")
 
   const {
     data: user,
@@ -55,6 +61,7 @@ function MyAccount() {
     const response = await API.put(`/user`, body, config);
 
     if (response.status == 200) {
+      setTextModal("Update Profile successfully")
       setSuccess(true);
     }
   });
@@ -62,6 +69,18 @@ function MyAccount() {
   const handleApprove = () => {
     approve.mutate();
   };
+
+  // function for delete
+  const deleteUser = async () => {
+    const response = await API.delete("/user");
+
+    
+    if (response.status == 200) {
+
+      history.push("/");
+    }
+  };
+
   return (
     <Body title="My Account">
       {success ? (
@@ -130,9 +149,38 @@ function MyAccount() {
             >
               Save Account
             </Button>
-            <Button className="btn btn-primary-danger btn-sm text-white font-weight-bold px-4">
+            <Button
+              onClick={() => setShow(true)}
+              className="btn btn-primary-danger btn-sm text-white font-weight-bold px-4"
+            >
               Delete Account
             </Button>
+
+            <Modal show={show} onHide={() => setShow(false)}>
+              <Modal.Body>
+                <span
+                  style={{
+                    color: "#469F74",
+                  }}
+                >
+                  you are sure you want to remove this link
+                </span>
+              </Modal.Body>
+              <Modal.Footer style={{ border: "none" }}>
+                <Button
+                  variant="btn btn-sm btn-danger px-5"
+                  onClick={() => deleteUser()}
+                >
+                  Yes
+                </Button>
+                <Button
+                  variant="btn btn-sm btn-light px-5"
+                  onClick={() => setShow(false)}
+                >
+                  Cancel
+                </Button>
+              </Modal.Footer>
+            </Modal>
           </Row>
         </div>
       </main>
