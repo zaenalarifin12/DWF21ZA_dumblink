@@ -134,15 +134,6 @@ function AddLink() {
         },
       };
 
-      const body = new FormData();
-
-      body.append("title", form.title);
-
-      body.append("template", id);
-
-      body.append("description", form.description);
-      body.append("image", form.image);
-
       // upload image one by one
       let newLinks = [];
 
@@ -152,30 +143,35 @@ function AddLink() {
         bodyLink.append("imageLink", links[index].imageLink);
 
         const result = await API.post("/imageLink", bodyLink, config);
-
         const thisLink = {
           ...links[index],
           imageLink: result.data.data.image,
         };
         newLinks.push(thisLink);
       }
+      
+      const body = new FormData();
 
+      body.append("title", form.title);
+
+      body.append("template", id);
+
+      body.append("description", form.description);
+      body.append("image", form.image);
       body.append("links", JSON.stringify(newLinks));
-
+     
       const response = await API.post("/link", body, config)
-        .catch((err) => {
-          if (err.response.status == 400) {
-            settextError(err.response.data.error.message);
-            setModalError(true);
-          }
-          console.log(err);
-        })
-        .then((res) => {
-          setModalSuccess(true);
-          console.log(res);
-        });
-
-      console.log(response);
+      .catch((err) => {
+        if (err.response.status == 400) {
+          settextError(err.response.data.error.message);
+          setModalError(true);
+        }
+        console.log(err);
+      })
+      .then((res) => {
+        setModalSuccess(true);
+        console.log(res);
+      });
     } catch (error) {
       console.log(error);
     }
@@ -244,7 +240,7 @@ function AddLink() {
             </Row>
           </Col>
         </Row>
-        {form.links.length - 1 == index ? (
+        {form.links.length - 1 == index && form.links.length != 2? (
           <Row className="mt-2 d-flex justify-content-end">
             <Button
               onClick={() => removeLinkForm(index)}

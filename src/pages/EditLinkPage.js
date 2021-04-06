@@ -22,10 +22,12 @@ function EditLinkPage() {
   const history = useHistory();
 
   const [initialLink, setInitialLink] = useState({
+    id: 0,
     titleLink: "",
     imageLink: null,
     urlLink: "",
     imagePreviewUrl: "",
+    imageAsli: "",
   });
 
   const [form, setForm] = useState({
@@ -61,11 +63,15 @@ function EditLinkPage() {
       template: response?.data?.data?.link?.template,
       imagePreviewUrl: response?.data?.data?.link?.image,
       links: response?.data?.data?.link?.links?.map((l) => ({
+        ...initialLink,
+        id: l.id,
         titleLink: l.title,
         urlLink: l.url,
         imagePreviewUrl: l.image,
+        imageAsli: l.imageAsli,
       })),
     });
+
     return response;
   });
 
@@ -150,6 +156,7 @@ function EditLinkPage() {
 
   const addLink = useMutation(async () => {
     try {
+
       const config = {
         headers: {
           "Content-Type": "mutipart/form-data",
@@ -160,34 +167,72 @@ function EditLinkPage() {
 
       body.append("title", form.title);
 
-      body.append("template", id);
-
       body.append("description", form.description);
+      
       body.append("image", form.image);
 
       // upload image one by one
       let newLinks = [];
+
       for (let index = 0; index < form.links.length; index++) {
         const bodyLink = new FormData();
 
-        bodyLink.append("imageLink", links[index].imageLink);
+        // jika id tidak == 0
+        // jika image gak null
+        // jika image null
 
-        const responseImage = await API.post("/imageLink", bodyLink, config);
-
-        const thisLink = {
-          ...links[index],
-          imageLink: responseImage.data.data.image,
-        };
-        newLinks.push(thisLink);
+        if (links[index].id != 0) {
+          if (links[index].imageLink == null) {
+            const thisLink = {
+              ...links[index],
+              imageLink: links[index].imageAsli,
+            };
+            newLinks.push(thisLink);
+          } else {
+            bodyLink.append("imageLink", links[index].imageLink);
+            const responseImage = await API.post(
+              "/imageLink",
+              bodyLink,
+              config
+            );
+            const thisLink = {
+              ...links[index],
+              imageLink: responseImage.data.data.image,
+            };
+            newLinks.push(thisLink);
+          }
+        }else{
+            if (links[index].imageLink == null) {
+                const thisLink = {
+                  ...links[index],
+                  imageLink: links[index].imageAsli,
+                };
+                newLinks.push(thisLink);
+              } else {
+                bodyLink.append("imageLink", links[index].imageLink);
+                const responseImage = await API.post(
+                  "/imageLink",
+                  bodyLink,
+                  config
+                );
+                const thisLink = {
+                  ...links[index],
+                  imageLink: responseImage.data.data.image,
+                };
+                newLinks.push(thisLink);
+              }
+        }
       }
+
+      
       body.append("links", JSON.stringify(newLinks));
 
-      const response = await API.post("/link", body, config)
+      const response = await API.put(`/link/${id}`, body, config)
         .catch((err) => {
-          if (err.response.status == 400) {
-            settextError(err.response.data.error.message);
-            setModalError(true);
-          }
+            if (err.response.status == 400) {
+              settextError(err.response.data.error.message);
+              setModalError(true);
+            }
           console.log(err);
         })
         .then((res) => {
@@ -195,7 +240,7 @@ function EditLinkPage() {
           console.log(res);
         });
 
-      console.log(response);
+        console.log(response);
     } catch (error) {
       console.log(error);
     }
@@ -243,7 +288,6 @@ function EditLinkPage() {
                   type="text"
                   name="titleLink"
                   value={link.titleLink}
-
                   onChange={(e) => onChangeLink(e, index)}
                   class="form-control form-custom bg-primary-gray"
                 />
@@ -267,7 +311,7 @@ function EditLinkPage() {
             </Row>
           </Col>
         </Row>
-        {index > 1 ? (
+        {form.links.length - 1 == index && form.links.length != 2 ? (
           <Row className="mt-2 d-flex justify-content-end">
             <Button
               onClick={() => removeLinkForm(index)}
@@ -308,7 +352,7 @@ function EditLinkPage() {
           <>
             <SweetAlert
               success
-              title="add link successfully"
+              title="update successfully"
               onConfirm={() => {
                 history.push("/my-link");
               }}
@@ -322,7 +366,7 @@ function EditLinkPage() {
 
         <form onSubmit={(e) => handleSubmit(e)}>
           <Row className="d-flex justify-content-between px-4 py-4">
-            <h1 className="h4">Create Link</h1>
+            <h1 className="h4">Edit Link</h1>
 
             <Button
               type="submit"
