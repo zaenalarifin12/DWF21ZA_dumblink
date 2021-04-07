@@ -47,8 +47,8 @@ function Preview1({ linkData }) {
                 <Col xs={3}>
                   <img
                     style={{
-                      height: "50px",
-                      width: "50px",
+                      height: "30px",
+                      width: "30px",
                       objectFit: "cover",
                     }}
                     className="rounded-circle"

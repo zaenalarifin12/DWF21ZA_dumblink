@@ -149,7 +149,7 @@ function AddLink() {
         };
         newLinks.push(thisLink);
       }
-      
+
       const body = new FormData();
 
       body.append("title", form.title);
@@ -159,19 +159,19 @@ function AddLink() {
       body.append("description", form.description);
       body.append("image", form.image);
       body.append("links", JSON.stringify(newLinks));
-     
+
       const response = await API.post("/link", body, config)
-      .catch((err) => {
-        if (err.response.status == 400) {
-          settextError(err.response.data.error.message);
-          setModalError(true);
-        }
-        console.log(err);
-      })
-      .then((res) => {
-        setModalSuccess(true);
-        console.log(res);
-      });
+        .catch((err) => {
+          if (err.response.status == 400) {
+            settextError(err.response.data.error.message);
+            setModalError(true);
+          }
+        })
+        .then((res) => {
+          setModalSuccess(true);
+
+          setForm(form);
+        });
     } catch (error) {
       console.log(error);
     }
@@ -240,7 +240,7 @@ function AddLink() {
             </Row>
           </Col>
         </Row>
-        {form.links.length - 1 == index && form.links.length != 2? (
+        {form.links.length - 1 == index && form.links.length != 2 ? (
           <Row className="mt-2 d-flex justify-content-end">
             <Button
               onClick={() => removeLinkForm(index)}

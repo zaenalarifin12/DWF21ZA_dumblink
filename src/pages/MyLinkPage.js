@@ -108,7 +108,7 @@ function MyLinkPage() {
                   />
                 </InputGroup>
               </Col>
-              <Col xs={2}>
+              <Col xs={2} className="d-flex justify-content-end">
                 <Button
                   onClick={(e) => handleSearch(e)}
                   className="btn btn-primary-yellow text-white font-weight-bold px-4 btn-md"

@@ -156,7 +156,6 @@ function EditLinkPage() {
 
   const addLink = useMutation(async () => {
     try {
-
       const config = {
         headers: {
           "Content-Type": "mutipart/form-data",
@@ -168,7 +167,7 @@ function EditLinkPage() {
       body.append("title", form.title);
 
       body.append("description", form.description);
-      
+
       body.append("image", form.image);
 
       // upload image one by one
@@ -224,7 +223,6 @@ function EditLinkPage() {
         }
       }
 
-      
       body.append("links", JSON.stringify(newLinks));
 
       const response = await API.put(`/link/${id}`, body, config)
@@ -239,8 +237,6 @@ function EditLinkPage() {
           setModalSuccess(true);
           console.log(res);
         });
-
-        console.log(response);
     } catch (error) {
       console.log(error);
     }

@@ -12,14 +12,16 @@ function PreviewLink() {
   const params = useParams();
   const { id } = params;
 
+  console.log(id);
   const {
     data: linkData,
     loading: linkLoading,
     error: linkError,
     refetch: linkRefetch,
   } = useQuery("userPartnerCache", async () => {
-    const response = await API.get(`/link/${id}`);
+    const response = await API.get(`/link/show/${id}`);
 
+    
     return response;
   });
 
