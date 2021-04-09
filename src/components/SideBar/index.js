@@ -23,7 +23,7 @@ function SideBar() {
       id="sidebarMenu"
       class="col-md-3 col-lg-2 position-fixed bg-white d-md-block bg-light sidebar collapse"
     >
-      <div class="sidebar-sticky pt-5 pl-4">
+      <div class="sidebar-sticky pt-3 pl-4">
         <ul class="nav flex-column">
           <li class="nav-item d-flex justify-content-start mb-3">
             <NavLink
@@ -87,7 +87,7 @@ function SideBar() {
           </li>
         </ul>
 
-        <ul class="nav flex-column mb-2" style={{ marginTop: 550 }}>
+        <ul class="nav flex-column mb-2" style={{ marginTop: 300 }}>
           <li class="nav-item d-flex justify-content-start my-3">
             <Button
               class="btn"

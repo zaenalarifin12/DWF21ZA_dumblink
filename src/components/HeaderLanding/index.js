@@ -1,7 +1,7 @@
 import React, { useState, useContext, useEffect } from "react";
 import Login from "../Login";
 import Register from "../Register";
-import { Button, OverlayTrigger, Popover } from "react-bootstrap";
+import { Button, Col, OverlayTrigger, Popover, Row } from "react-bootstrap";
 import { useHistory, withRouter } from "react-router";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext";
@@ -89,39 +89,45 @@ function HeaderLanding() {
   };
 
   return (
-    <div className="bg-primary-gray container-fluid d-flex flex-column flex-md-row align-items-center py-3 px-5 position-relative" style={{zIndex: 100}}>
-      <h5 className="my-0 mr-md-auto font-weight-normal">
-        <Link to={`/`}>
-          <img style={{ width: 140 }} src="/assets/icons/logo.svg" />
-        </Link>
-      </h5>
+    <Row
+      className="bg-primary-gray py-3 px-4 position-relative"
+      style={{ zIndex: 100 }}
+    >
+      <Col>
+        <span className="my-0 mr-md-auto font-weight-normal">
+          <Link to={`/`}>
+            <img style={{ maxWidth: 140 }} src="/assets/icons/logo.svg" />
+          </Link>
+        </span>
+      </Col>
+      <Col className="d-flex justify-content-end">
+        <Button
+          className="btn btn-md bg-primary-gray btn-primary-gray text-primary-black font-weight-bold mr-4 "
+          onClick={showModalLogin}
+        >
+          Login
+        </Button>
 
-      <Button
-        className="btn btn-md bg-primary-gray btn-primary-gray text-primary-black font-weight-bold mr-4 "
-        onClick={showModalLogin}
-      >
-        Login
-      </Button>
+        <Login
+          show={stateAuthModal.login}
+          onHide={hideModalAll}
+          showRegister={showModalRegister}
+        />
 
-      <Login
-        show={stateAuthModal.login}
-        onHide={hideModalAll}
-        showRegister={showModalRegister}
-      />
+        <Button
+          className="btn btn-md btn-primary-yellow text-white font-weight-bold"
+          onClick={showModalRegister}
+        >
+          Register
+        </Button>
 
-      <Button
-        className="btn btn-md btn-primary-yellow text-white font-weight-bold"
-        onClick={showModalRegister}
-      >
-        Register
-      </Button>
-
-      <Register
-        show={stateAuthModal.register}
-        onHide={hideModalAll}
-        showLogin={showModalLogin}
-      />
-    </div>
+        <Register
+          show={stateAuthModal.register}
+          onHide={hideModalAll}
+          showLogin={showModalLogin}
+        />
+      </Col>
+    </Row>
   );
 }
 

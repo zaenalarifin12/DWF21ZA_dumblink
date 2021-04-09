@@ -1,11 +1,11 @@
 import { Button, Col, Row } from "react-bootstrap";
 import React from "react";
-import Fade from "react-reveal/Fade";
+import "./index.scss"
 
 function Hero() {
   return (
     <div className="bg-primary-yellow" style={{ minHeight: "100vh" }}>
-      <img
+      {/* <img
         src="/assets/images/Vector-2.png"
         style={{
           position: "absolute",
@@ -15,26 +15,7 @@ function Hero() {
           bottom: -50,
         }}
       />
-      <img
-        src="/assets/images/PC.png"
-        style={{
-          position: "absolute",
-          width: 557,
-          height: 441,
-          left: 791,
-          top: 229,
-        }}
-      />
-      <img
-        src="/assets/images/Phone.png"
-        style={{
-          position: "absolute",
-          width: 250,
-          height: 378,
-          left: 709,
-          top: 325,
-        }}
-      />
+     
 
       <img
         src="/assets/images/Ellipse-1.png"
@@ -56,11 +37,17 @@ function Hero() {
           left: 0,
           bottom: -60,
         }}
-      />
+      /> */}
 
       <div className=" container-fluid pt-5 px-5">
         <div className="row">
-          <div className="col my-auto text-white" style={{ paddingTop: 100 }}>
+          <Col
+            sm={12}
+            md={12}
+            lg={6}
+            className="my-auto text-white pt-sm-0"
+            style={{ paddingTop: 100 }}
+          >
             <h1
               style={{
                 fontSize: "72px",
@@ -93,22 +80,26 @@ function Hero() {
               </Row>
             </Col>
             <div>
-              <Row
-              style={{ marginTop: 100 }}
-              >
+              <Row style={{ marginTop: 100, marginBottom: 20 }}>
                 <Col>
-                  <Button
-                    className="btn btn-block btn-lg btn-primary-black text-white font-weight-bold display-1 mt-5"
-                    
-                  >
+                  <Button className="btn btn-block btn-lg btn-primary-black text-white font-weight-bold display-1 mt-5">
                     Get Started For Free
                   </Button>
                 </Col>
                 <Col></Col>
               </Row>
             </div>
-          </div>
-          <div className="col"></div>
+          </Col>
+          <Col>
+            <img
+              src="/assets/images/PC.png"
+              className="pc"
+            />
+            <img
+              src="/assets/images/Phone.png"
+              className="phone"
+            />
+          </Col>
         </div>
       </div>
     </div>

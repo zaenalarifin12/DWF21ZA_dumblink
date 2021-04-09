@@ -200,26 +200,26 @@ function EditLinkPage() {
             };
             newLinks.push(thisLink);
           }
-        }else{
-            if (links[index].imageLink == null) {
-                const thisLink = {
-                  ...links[index],
-                  imageLink: links[index].imageAsli,
-                };
-                newLinks.push(thisLink);
-              } else {
-                bodyLink.append("imageLink", links[index].imageLink);
-                const responseImage = await API.post(
-                  "/imageLink",
-                  bodyLink,
-                  config
-                );
-                const thisLink = {
-                  ...links[index],
-                  imageLink: responseImage.data.data.image,
-                };
-                newLinks.push(thisLink);
-              }
+        } else {
+          if (links[index].imageLink == null) {
+            const thisLink = {
+              ...links[index],
+              imageLink: links[index].imageAsli,
+            };
+            newLinks.push(thisLink);
+          } else {
+            bodyLink.append("imageLink", links[index].imageLink);
+            const responseImage = await API.post(
+              "/imageLink",
+              bodyLink,
+              config
+            );
+            const thisLink = {
+              ...links[index],
+              imageLink: responseImage.data.data.image,
+            };
+            newLinks.push(thisLink);
+          }
         }
       }
 
@@ -227,19 +227,15 @@ function EditLinkPage() {
 
       const response = await API.put(`/link/${id}`, body, config)
         .catch((err) => {
-            if (err.response.status == 400) {
-              settextError(err.response.data.error.message);
-              setModalError(true);
-            }
-          console.log(err);
+          if (err.response.status == 400) {
+            settextError(err.response.data.error.message);
+            setModalError(true);
+          }
         })
         .then((res) => {
           setModalSuccess(true);
-          console.log(res);
         });
-    } catch (error) {
-      console.log(error);
-    }
+    } catch (error) {}
   });
 
   const handleSubmit = (e) => {

@@ -1,13 +1,11 @@
 import React from "react";
 import { Col, Row } from "react-bootstrap";
+import "./Preview1.scss";
 
 function Preview1({ linkData }) {
   return (
     <div>
-      <div
-        className="container mx-auto mt-5"
-        style={{ paddingLeft: 200, paddingRight: 200 }}
-      >
+      <div className="container mx-auto mt-5 container-custom">
         <div className="d-flex justify-content-center">
           <img
             style={{
@@ -20,7 +18,7 @@ function Preview1({ linkData }) {
           />
         </div>
 
-        <h1 className="text-center">{linkData?.title}</h1>
+        <h1 className="text-center h2 ">{linkData?.title}</h1>
         <p className="text-center">{linkData?.description}</p>
 
         <br />
@@ -28,7 +26,7 @@ function Preview1({ linkData }) {
         {linkData?.links?.map((link) => {
           return (
             <>
-              <Row className="d-flex align-items-center bg-primary-black my-2 py-2">
+              <Row className="d-flex align-items-center my-2 py-2 link">
                 <Col xs={5}>
                   <img
                     style={{

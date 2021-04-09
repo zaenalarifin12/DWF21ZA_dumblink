@@ -76,7 +76,7 @@ function MyLinkPage() {
 
           <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4 pt-4">
             <Row className="d-flex justify-content-between align-items-center px-4 py-2">
-              <Col xs={2}>
+              <Col sm={12} md={12} lg={2}>
                 <h1 className="h4">
                   All Links{" "}
                   <span class="badge badge-primary-yellow text-white rounded-circle">
@@ -84,7 +84,7 @@ function MyLinkPage() {
                   </span>
                 </h1>
               </Col>
-              <Col xs={8}>
+              <Col sm={2} md={2} lg={8}>
                 <InputGroup className="mb-3">
                   <InputGroup.Prepend
                     style={{
@@ -108,7 +108,12 @@ function MyLinkPage() {
                   />
                 </InputGroup>
               </Col>
-              <Col xs={2} className="d-flex justify-content-end">
+              <Col
+                sm={2}
+                md={2}
+                lg={2}
+                className="d-flex justify-content-end"
+              >
                 <Button
                   onClick={(e) => handleSearch(e)}
                   className="btn btn-primary-yellow text-white font-weight-bold px-4 btn-md"
@@ -124,27 +129,28 @@ function MyLinkPage() {
                   {linksData?.data?.data?.links.map((link) => {
                     return (
                       <Row className={`my-2 py-2 rounded bg-white `}>
-                        <Col xs={2} className="my-auto">
+                        <Col sm={12} md={12} lg={2} className="my-auto mx-auto">
                           <img
                             src={link.image}
                             style={{
-                              width: "80%",
+
+                              width: "100%",
                               height: 150,
                               objectFit: "cover",
                             }}
                           />
                         </Col>
-                        <Col className="my-auto">
+                        <Col sm={12} md={12} lg={4} className="my-auto d-flex flex-column ">
                           <Row>
-                            <p className="font-weight-bold h4">{link.title}</p>
+                            <p className="font-weight-bold h4 pl-3">{link.title}</p>
                           </Row>
-                          <Row className="font-weight-normal">
+                          <Row className="font-weight-normal pl-3">
                             <p className="text-secondary">
                               {`http://localhost:3000/${link.uniqueLink}`}
                             </p>
                           </Row>
                         </Col>
-                        <Col className="my-auto">
+                        <Col sm={12} md={12} lg={2} className="my-auto">
                           <Row className="d-flex justify-content-center">
                             <p className="font-weight-bold h4">
                               {link.viewCount}
@@ -154,7 +160,12 @@ function MyLinkPage() {
                             <p className="text-secondary">Visit</p>
                           </Row>
                         </Col>
-                        <Col className="my-auto d-flex justify-content-center">
+                        <Col
+                          sm={12}
+                          md={12}
+                          lg={4}
+                          className="my-auto d-flex justify-content-center"
+                        >
                           <Link
                             className="mr-4"
                             to={`/link/${link.uniqueLink}`}
@@ -213,7 +224,7 @@ function MyLinkPage() {
               ) : (
                 <>
                   <div className="d-flex justify-content-center">
-                    <img src="assets/icons/no-data.svg" />
+                    <img src="assets/icons/no-data.svg" width="80%" />
                   </div>
                 </>
               )}

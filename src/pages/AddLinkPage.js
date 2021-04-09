@@ -187,7 +187,7 @@ function AddLink() {
     listLink.push(
       <>
         <Row className="mt-4 d-flex align-items-center bg-primary-gray p-2">
-          <Col xs={3}>
+          <Col sm={6} md={6} lg={4}>
             <div class="image-upload">
               <label for={`file-input-${index}`}>
                 <img
@@ -211,8 +211,8 @@ function AddLink() {
               />
             </div>
           </Col>
-          <Col className="d-flex align-items-end p-0">
-            <Row>
+          <Col sm={6} md={6} lg={8} className="d-flex align-items-end px-sm-2  p-lg-0">
+            <Row className="py-sm-4">
               <div class="form-group col-12">
                 <label>Title Link</label>
                 <input
@@ -261,7 +261,7 @@ function AddLink() {
     <Body title="Template">
       <main
         role="main"
-        class="col-md-9 ml-sm-auto col-lg-10 px-md-4 bg-light pt-5"
+        class="col-md-9 ml-sm-auto col-lg-10 px-md-4 bg-light pt-3"
       >
         {modalError ? (
           <>
@@ -294,7 +294,7 @@ function AddLink() {
         )}
 
         <form onSubmit={(e) => handleSubmit(e)}>
-          <Row className="d-flex justify-content-between px-4 py-4">
+          <Row className="d-flex justify-content-between px-4 py-2">
             <h1 className="h4">Create Link</h1>
 
             <Button
@@ -307,20 +307,20 @@ function AddLink() {
 
           <div className="m-4">
             <Row>
-              <Col className="bg-white rounded">
+              <Col sm={12} md={12} lg={6} className="bg-white rounded">
                 <div className="p-3">
                   <Row>
-                    <Col xs={3}>
+                    <Col sm={3} md={3} lg={3} className="mb-3">
                       <img
                         src={
                           imagePreviewUrl != ""
                             ? imagePreviewUrl
                             : "/assets/images/preview-image.png"
                         }
-                        style={{ width: 100, height: 100, objectFit: "cover" }}
+                        style={{ maxWidth: 100, maxHeight: 100, objectFit: "cover" }}
                       />
                     </Col>
-                    <Col className="d-flex align-items-end mb-3">
+                    <Col sm={3} md={6} lg={3} className="d-flex align-items-end mb-3">
                       <label
                         class="btn btn-sm btn-primary-yellow text-white"
                         for="customFile"
@@ -337,10 +337,6 @@ function AddLink() {
                           onChange={(e) => onChange(e)}
                         />
                       </div>
-
-                      {/* <Button className="btn btn-primary-yellow text-white btn-sm px-3">
-                      Upload
-                    </Button> */}
                     </Col>
                   </Row>
 
@@ -389,7 +385,7 @@ function AddLink() {
                   )}
                 </div>
               </Col>
-              <Col>
+              <Col sm={12} md={12} lg={6}>
                 <div
                   className="d-flex justify-content-center position-fixed"
                   style={{ maxWidth: 400 }}

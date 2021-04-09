@@ -22,7 +22,7 @@ function MyAccount() {
   const { name, email } = form;
 
   const [success, setSuccess] = useState(false);
-  const [textModal, setTextModal] = useState("")
+  const [textModal, setTextModal] = useState("");
 
   const {
     data: user,
@@ -61,7 +61,7 @@ function MyAccount() {
     const response = await API.put(`/user`, body, config);
 
     if (response.status == 200) {
-      setTextModal("Update Profile successfully")
+      setTextModal("Update Profile successfully");
       setSuccess(true);
     }
   });
@@ -74,9 +74,7 @@ function MyAccount() {
   const deleteUser = async () => {
     const response = await API.delete("/user");
 
-    
     if (response.status == 200) {
-
       history.push("/");
     }
   };
@@ -100,6 +98,7 @@ function MyAccount() {
       <main
         role="main"
         class=" bg-light col-md-9 ml-sm-auto col-lg-10 px-md-4 pt-4"
+        style={{ minHeight: "100vh" }}
       >
         <Row className="d-flex justify-content-between px-4 py-2">
           <h1 className="h4">My Information</h1>
