@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Col, Row } from "react-bootstrap";
 import { Link, useParams } from "react-router-dom";
 import { useQuery } from "react-query";
@@ -12,30 +12,50 @@ function PreviewLink() {
   const params = useParams();
   const { id } = params;
 
-  console.log(id);
-  const {
-    data: linkData,
-    loading: linkLoading,
-    error: linkError,
-    refetch: linkRefetch,
-  } = useQuery("userPartnerCache", async () => {
-    const response = await API.get(`/link/show/${id}`);
+  const [link, setLink] = useState(null);
+  const [loading, setLoading] = useState(true);
 
-    
-    return response;
-  });
+  const getLink = async () => {
+    try {
+      const response = await API.get(`/link/show/${id}`)
+        .then((success) => {
+          setLink(success.data.data.link);
+          setLoading(false);
+        })
+        .catch((error) => {
+          console.log(error.response.status == 404);
+          setLoading(false);
+        });
+    } catch (error) {}
+  };
 
+  useEffect(() => {
+    getLink();
+  }, []);
   return (
     <>
-    
-      {linkData?.data?.data?.link?.template == 1 ? (
-        <Preview1 linkData={linkData?.data?.data?.link} />
-      ) : linkData?.data?.data?.link?.template == 2 ? (
-        <Preview2 linkData={linkData?.data?.data?.link} />
-      ) : linkData?.data?.data?.link?.template == 3 ? (
-        <Preview3 linkData={linkData?.data?.data?.link} />
+      {loading ? (
+        <></>
       ) : (
-        <Preview4 linkData={linkData?.data?.data?.link} />
+        <>
+          {link == null ? (
+            <>
+              <p className="text-center">Link tidak ditemukan</p>
+            </>
+          ) : (
+            <>
+              {link.template == 1 ? (
+                <Preview1 linkData={link} />
+              ) : link.template == 2 ? (
+                <Preview2 linkData={link} />
+              ) : link.template == 3 ? (
+                <Preview3 linkData={link} />
+              ) : (
+                <Preview4 linkData={link} />
+              )}
+            </>
+          )}
+        </>
       )}
     </>
   );

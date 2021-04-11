@@ -248,7 +248,7 @@ function EditLinkPage() {
     listLink.push(
       <>
         <Row className="mt-4 d-flex align-items-center bg-primary-gray p-2">
-          <Col xs={3}>
+          <Col sm={6} md={6} lg={4}>
             <div class="image-upload">
               <label for={`file-input-${index}`}>
                 <img
@@ -272,7 +272,7 @@ function EditLinkPage() {
               />
             </div>
           </Col>
-          <Col className="d-flex align-items-end p-0">
+          <Col sm={6} md={6} lg={8}  className="d-flex align-items-end p-0">
             <Row>
               <div class="form-group col-12">
                 <label>Title Link</label>
@@ -326,7 +326,7 @@ function EditLinkPage() {
         role="main"
         class="col-md-9 ml-sm-auto col-lg-10 px-md-4 bg-light pt-5"
       >
-        {modalError ? (
+        {/* {modalError ? (
           <>
             <SweetAlert
               danger
@@ -338,7 +338,7 @@ function EditLinkPage() {
           </>
         ) : (
           <></>
-        )}
+        )} */}
 
         {modalSuccess ? (
           <>
@@ -373,7 +373,7 @@ function EditLinkPage() {
               <Col className="bg-white rounded">
                 <div className="p-3">
                   <Row>
-                    <Col xs={3}>
+                    <Col  sm={12} md={12} lg={6}>
                       <img
                         src={
                           imagePreviewUrl != ""
@@ -450,7 +450,7 @@ function EditLinkPage() {
                   </Row>
                 </div>
               </Col>
-              <Col>
+              <Col sm={12} md={12} lg={6}>
                 <div
                   className="d-flex justify-content-center position-fixed"
                   style={{ maxWidth: 400 }}
@@ -462,15 +462,17 @@ function EditLinkPage() {
                     style={{ width: 400, zIndex: 2, left: 0 }}
                   />
                   {/* </div> */}
-                  {id == 1 ? (
+                  {form.template == 1 ? (
                     <Preview1 linkData={form} />
-                  ) : id == 2 ? (
+                  ) : form.template == 2 ? (
                     <Preview2 linkData={form} />
-                  ) : id == 3 ? (
+                  ) : form.template == 3 ? (
                     <Preview3 linkData={form} />
                   ) : (
                     <Preview4 linkData={form} />
                   )}
+
+                  {console.log(form)}
                 </div>
               </Col>
             </Row>

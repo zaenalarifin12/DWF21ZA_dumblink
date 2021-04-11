@@ -66,6 +66,22 @@ function MyLinkPage() {
     linksRefetch(search);
   };
 
+  const handleActive = async (e, id) => {
+    try {
+      await API.put(`/link/${id}/active`).then(() => {
+        linksRefetch();
+      });
+    } catch (error) {}
+  };
+
+  const handleNonaktif = async (e, id) => {
+    try {
+      await API.put(`/link/${id}/nonaktif`).then(() => {
+        linksRefetch();
+      });
+    } catch (error) {}
+  };
+
   return (
     <div style={{ backgroundColor: "#E5E5E5", minHeight: "100vh" }}>
       <HeaderHome title="My Link" />
@@ -108,12 +124,7 @@ function MyLinkPage() {
                   />
                 </InputGroup>
               </Col>
-              <Col
-                sm={2}
-                md={2}
-                lg={2}
-                className="d-flex justify-content-end"
-              >
+              <Col sm={2} md={2} lg={2} className="d-flex justify-content-end">
                 <Button
                   onClick={(e) => handleSearch(e)}
                   className="btn btn-primary-yellow text-white font-weight-bold px-4 btn-md"
@@ -124,100 +135,138 @@ function MyLinkPage() {
             </Row>
 
             <div className="px-4 mt-4">
+              {console.log(linksData?.data?.data?.links)}
               {linksData?.data?.data?.links.length > 0 ? (
                 <>
                   {linksData?.data?.data?.links.map((link) => {
                     return (
-                      <Row className={`my-2 py-2 rounded bg-white `}>
-                        <Col sm={12} md={12} lg={2} className="my-auto mx-auto">
-                          <img
-                            src={link.image}
-                            style={{
-
-                              width: "100%",
-                              height: 150,
-                              objectFit: "cover",
-                            }}
-                          />
-                        </Col>
-                        <Col sm={12} md={12} lg={4} className="my-auto d-flex flex-column ">
-                          <Row>
-                            <p className="font-weight-bold h4 pl-3">{link.title}</p>
-                          </Row>
-                          <Row className="font-weight-normal pl-3">
-                            <p className="text-secondary">
-                              {`http://localhost:3000/${link.uniqueLink}`}
-                            </p>
-                          </Row>
-                        </Col>
-                        <Col sm={12} md={12} lg={2} className="my-auto">
-                          <Row className="d-flex justify-content-center">
-                            <p className="font-weight-bold h4">
-                              {link.viewCount}
-                            </p>
-                          </Row>
-                          <Row className="d-flex justify-content-center">
-                            <p className="text-secondary">Visit</p>
-                          </Row>
-                        </Col>
-                        <Col
-                          sm={12}
-                          md={12}
-                          lg={4}
-                          className="my-auto d-flex justify-content-center"
-                        >
-                          <Link
-                            className="mr-4"
-                            to={`/link/${link.uniqueLink}`}
+                      <div className="bg-white px-2 py-2">
+                        <Row className={`my-2 rounded  `}>
+                          <Col
+                            sm={12}
+                            md={12}
+                            lg={2}
+                            className="my-auto mx-auto"
                           >
-                            <img src="/assets/icons/view.svg" />
-                          </Link>
-                          <Link to={`/edit-link/${link.id}`} className="mr-4">
-                            <img src="/assets/icons/edit.svg" />
-                          </Link>
-                          <Button
-                            className="bg-white border border-white p-0"
-                            onClick={() => handleConfirmDelete(link.uniqueLink)}
+                            <img
+                              src={link.image}
+                              style={{
+                                width: "100%",
+                                height: 150,
+                                objectFit: "cover",
+                              }}
+                            />
+                          </Col>
+                          <Col
+                            sm={12}
+                            md={12}
+                            lg={4}
+                            className="my-auto d-flex flex-column "
                           >
-                            <img src="/assets/icons/trash.svg" />
-                          </Button>
+                            <Row>
+                              <p className="font-weight-bold h4 pl-3">
+                                {link.title}
+                              </p>
+                            </Row>
+                            <Row className="font-weight-normal pl-3">
+                              <p className="text-secondary">
+                                {`http://localhost:3000/${link.uniqueLink}`}
+                              </p>
+                            </Row>
+                          </Col>
+                          <Col sm={12} md={12} lg={2} className="my-auto">
+                            <Row className="d-flex justify-content-center">
+                              <p className="font-weight-bold h4">
+                                {link.viewCount}
+                              </p>
+                            </Row>
+                            <Row className="d-flex justify-content-center">
+                              <p className="text-secondary">Visit</p>
+                            </Row>
+                          </Col>
 
-                          {modalConfirmDelete ? (
-                            <>
-                              <SweetAlert
-                                custom
-                                showCancel
-                                // showCloseButton
-                                confirmBtnText="Yes"
-                                cancelBtnText="No"
-                                confirmBtnBsStyle="danger"
-                                cancelBtnBsStyle="light"
-                                customIcon="https://img.icons8.com/bubbles/500/000000/trash.png"
-                                title="Are You Sure Want To Delete"
-                                onConfirm={() => handleDeleteLink()}
-                                onCancel={() => setModalConfirmDelete(false)}
-                              ></SweetAlert>
-                            </>
-                          ) : (
-                            <></>
-                          )}
+                          <Col
+                            sm={12}
+                            md={12}
+                            lg={4}
+                            className="my-auto d-flex justify-content-center"
+                          >
+                            <Link
+                              className="mr-4"
+                              to={`/link/${link.uniqueLink}`}
+                            >
+                              <img src="/assets/icons/view.svg" />
+                            </Link>
+                            <Link to={`/edit-link/${link.id}`} className="mr-4">
+                              <img src="/assets/icons/edit.svg" />
+                            </Link>
+                            <Button
+                              className="bg-white border border-white p-0"
+                              onClick={() =>
+                                handleConfirmDelete(link.uniqueLink)
+                              }
+                            >
+                              <img src="/assets/icons/trash.svg" />
+                            </Button>
 
-                          {successDelete ? (
-                            <>
-                              <SweetAlert
-                                success
-                                title="Link Deleted"
-                                onConfirm={() => {
-                                  setSuccessDelete(false);
-                                }}
-                                timeout={5000}
-                              ></SweetAlert>
-                            </>
-                          ) : (
-                            <></>
-                          )}
-                        </Col>
-                      </Row>
+                            {modalConfirmDelete ? (
+                              <>
+                                <SweetAlert
+                                  custom
+                                  showCancel
+                                  // showCloseButton
+                                  confirmBtnText="Yes"
+                                  cancelBtnText="No"
+                                  confirmBtnBsStyle="danger"
+                                  cancelBtnBsStyle="light"
+                                  customIcon="https://img.icons8.com/bubbles/500/000000/trash.png"
+                                  title="Are You Sure Want To Delete"
+                                  onConfirm={() => handleDeleteLink()}
+                                  onCancel={() => setModalConfirmDelete(false)}
+                                ></SweetAlert>
+                              </>
+                            ) : (
+                              <></>
+                            )}
+
+                            {successDelete ? (
+                              <>
+                                <SweetAlert
+                                  success
+                                  title="Link Deleted"
+                                  onConfirm={() => {
+                                    setSuccessDelete(false);
+                                  }}
+                                  timeout={5000}
+                                ></SweetAlert>
+                              </>
+                            ) : (
+                              <></>
+                            )}
+                          </Col>
+                        </Row>
+                        <Row>
+                          <Col>
+                            {link.active == 1 ? (
+                              <>
+                                <Button
+                                  onClick={(e) => handleNonaktif(e, link.id)}
+                                >
+                                  Nonaktif
+                                </Button>
+                              </>
+                            ) : (
+                              <>
+                                <Button
+                                  onClick={(e) => handleActive(e, link.id)}
+                                >
+                                  Aktif
+                                </Button>
+                              </>
+                            )}
+                          </Col>
+                        </Row>
+                      </div>
                     );
                   })}
                 </>
